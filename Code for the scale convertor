@@ -1,0 +1,50 @@
+use std::io; //This is standard for programs that will require any user to input values and answer questions from the program. Imports the input output library to read the input by the user from the Terminal.
+
+
+fn celsius_conversion (f: f64) -> f64 { //Next up we create a funtion that will denote the formulae to be used when converting Fahrenheit to Celsius...
+    (f - 32.0) * 0.556
+}
+
+fn fahrenheit_conversion (c: f64) -> f64 { //We do the same with the conversion of Celsius to Fahrenheit by creating it's function
+
+    (c * 1.8) + 32.0
+}
+
+// I will use both of these formulas when I kick start my main function for conversion of the readings.
+
+fn main() { //Where the program will start running, having taken into account the above prerequisites...
+
+    println!("Please input the temperature reading;"); //Start off by asking the user what the temperature reading they want to input...
+
+    let mut temp_input = String::new(); //We assign the input from the user into a new String to the mutable variable "temp_input". This is where the value input will be stored.
+    io::stdin().read_line(&mut temp_input).expect("Failed to read line"); //Used in code to read the user input. It's like the magic line that instructs my program to go ahead and read what the user has input.
+
+    let temp_input: f64 = temp_input.trim().parse().expect("Please input a valid reading"); 
+// ** This is a new one I learned today, called parsing. It's simply converting the String data type of the input "temp_input" that has been read by the previous block of code
+// and converting it into a numerical data type "(f64)" that can be used with numerical operations. Otherwise the String type above cannot...
+
+    println!("Select if it is celsius or farenheit? C/F"); // We now need input from the user on whether their input is either in Celsius or Fahrenheit. We ask them the question
+
+    let mut unit_input = String::new(); //We store their answer in a new String that is under a variable named "unit_input" that is of a mutable/changeable data type..
+    io::stdin().read_line(&mut unit_input).expect("Failed to read line"); //As above, this line of code is here so the Terminal can be able to read the user input.
+
+    let unit_input = unit_input.trim().to_lowercase(); //This line of code trims the extra "white space" from the user's answer and converts any and all answers to lower case.
+
+
+
+    if unit_input == "c" { //We use control flow "if" statement to create the beautiful magic and convert any celsius readings ("c") into Fahrenheit by calling the function of "fahrenheit_conversion" into play and passing the temp_input as an argumentof solid value for the function to consider...
+
+        let converted_temp = fahrenheit_conversion(temp_input);
+
+        println!("The converted reading in Fahrenheit is {converted_temp}"); //The result if it satisfies this first option...
+
+    } else if unit_input == "f" { // Same explanation as above, however now converting any and all Fahrenheit measurements to Celsius
+
+        let converted_temp = celsius_conversion(temp_input);
+
+        println!("The converted reading in Celsius is {converted_temp}"); // The result if the "unit_input" satisfies this part fully
+
+    } else {
+        println!("Invalid input. Please input either C or F to accurately determine the converted value."); // We put this here just in case our program gets an answer it cannot recognise, it has a remedy and response for it...
+    }
+} //End
